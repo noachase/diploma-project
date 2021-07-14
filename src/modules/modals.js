@@ -1,5 +1,6 @@
+/* eslint-disable quotes */
 'use strict'
-
+//* OPEN MODALS
 const modals = () => {
   const popup = document.querySelector('.header-modal')
   const servicesModal = document.querySelector('.services-modal')
@@ -28,7 +29,6 @@ const modals = () => {
       overlay.style.display = 'flex'
     }
     else {
-      console.log('asadnan')
       target = target.closest('.box-modal')
       if (!target) {
         closeModal()
@@ -40,51 +40,83 @@ const modals = () => {
 
 //* LIGHTBOX FOR CERTS
 const openLightbox = () => {
-  const certs = document.querySelectorAll('.sertificate-document')
-  const cert = document.querySelector('.sertificate-document')
-  const certsParent = document.getElementById('documents')
-  console.log(certsParent)
 
   const imagesContainer = document.getElementById('documents')
   const lightbox = document.getElementById('lightbox')
 
-  // Show lightbox 
-  imagesContainer.addEventListener('click', e => {
+  const toggleCert = e => {
     e.preventDefault()
-    const imageWrapper = e.target.closest('.image-wrapper')
+
+    const t = e.target
+
+    const imageWrapper = t.closest('.image-wrapper')
+    // const ahr = imageWrapper.querySelector('img').getAttribute('src')
+    // console.log("🚀 ~ file: modals.js ~ line 87 ~ openLightbox ~ ahr", ahr)
+
     if (imageWrapper) {
       const image = imageWrapper.querySelector('img')
-      const imageSrc = imageWrapper.querySelector('img').getAttribute('src')
+      const images = imageWrapper.querySelectorAll('img')
 
       const aHref = imageWrapper.querySelector('a').getAttribute('href')
+      let srcArr = []
+      images.forEach(el => {
+        srcArr.push(el.getAttribute('src'))
+      })
+      console.log('srcArr', srcArr)
       image.setAttribute('src', aHref)
-      console.log("🚀 ~ file: modals.js ~ line 61 ~ openLightbox ~ aHref", aHref)
+      // console.log("aHref", aHref)
       if (image) {
         lightbox.innerHTML = '<div class="close-lightbox"></div>' + image.outerHTML
         lightbox.classList.add('show')
       }
+      const imageSrc = imageWrapper.querySelector('img').getAttribute('src')
     }
-  })
 
-  // Hide Lightbox
-  lightbox.addEventListener('click', e => {
-    // const imageWrapper = e.target.closest('.image-wrapper')
-    // const imageSrc = imageWrapper.querySelector('img').getAttribute('src')
-    // image.setAttribute('src', imageSrc)
-    console.log(e.target)
-    if (e.target.classList.contains('close-lightbox')) {
+    if (t.classList.contains('close-lightbox')) {
+      const lightbox = document.getElementById('lightbox')
+      console.log('lightbox', lightbox.parentElement.parentElement)
+      // const 
+      const imageSr = lightbox.querySelector('img').getAttribute('src')
+
       lightbox.classList.remove('show')
-      // e.target.setAttribute('src', imageSrc)
     }
-    // if (!e.target.hasAttribute('src')) {
-    //   lightbox.classList.remove('show')
-    // }
-  })
+  }
 
   // Loading...
   // setTimeout(() =>
   //   imagesContainer.classList.remove('loading')
   //   , 1500)
+  imagesContainer.addEventListener('click', toggleCert)
+}
+
+//*CALC
+const calc = (price = 100) => {
+  if (document.getElementById('calc-input')) {
+    const calcBlock = document.getElementById('calc')
+    const calcType = document.getElementById('calc-type')
+    const calcTypeMaterial = document.getElementById('calc-type-material')
+    const calcSquare = document.getElementById('calc-input')
+    const totalValue = document.getElementById('calc-totalid')
+
+    const countSum = () => {
+      let total = 0
+      const typeValue = +calcType.options[calcType.selectedIndex].value
+      const typeMaterialValue = +calcTypeMaterial.options[calcTypeMaterial.selectedIndex].value
+      const squareValue = +calcSquare.value
+
+      if (typeValue > 0 && typeMaterialValue > 0 && squareValue > 0) {
+        total = price * typeValue * typeMaterialValue * squareValue
+      }
+      totalValue.value = total
+    }
+
+    calcBlock.addEventListener('change', e => {
+      const target = e.target
+      if (target.matches('select') || target.matches('input')) {
+        countSum()
+      }
+    })
+  }
 }
 
 //* TIMER
@@ -181,8 +213,222 @@ const scrollToTop = () => {
   toTopBtn.addEventListener('click', scroll)
 }
 
+//*VALIDATION
+const useValidateCalc = () => {
+  if (document.getElementById('calc-input')) {
+
+    const calcSquare = document.getElementById('calc-input')
+    const numRegex = /\D/
+
+    const validateCalc = e => {
+      const target = e.target
+      target.value = target.value.replace(numRegex, '')
+    }
+    calcSquare.addEventListener('input', validateCalc)
+  }
+}
+
+const useValidateForms = () => {
+  const namesInputs = document.querySelectorAll('input[name="fio"]')
+  const phonesInputs = document.querySelectorAll('input[name="phone"]')
+  const buttons = document.querySelectorAll('button[type="submit"]')
+
+  // const digitsRegex = /\D+/
+  const cellRegex = /[^0-9+]/g
+  const textRegex = /[^а-яa-z-' ё]/gi
+
+  const btnEnable = () => {
+    buttons.forEach(el => {
+      el.removeAttribute('disabled')
+    })
+  }
+  const btnDisable = () => {
+    buttons.forEach(el => {
+      el.setAttribute('disabled', true)
+    })
+  }
+
+  const colorBorder = e => {
+    if (e.target.value.trim() !== '') {
+      e.target.style.border = '1px solid #00902a'
+      btnEnable()
+    } else if (!e.target.value) {
+      e.target.style.border = '1px solid red'
+      btnDisable()
+    }
+  }
+
+  const validateCell = e => {
+    if (e.target.value.length > 16) e.target.style.border = '1px solid red'
+    e.target.value = e.target.value
+      .replace(cellRegex, '')
+
+    colorBorder(e)
+  }
+
+  const validateNames = e => {
+    e.target.value = e.target.value
+      .replace(textRegex, '')
+    colorBorder(e)
+  }
+
+  namesInputs.forEach(el => {
+    el.addEventListener('blur', () => { el.style.border = '1px solid #ccc' })
+  })
+  phonesInputs.forEach(el => {
+    el.addEventListener('blur', () => { el.style.border = '1px solid #ccc' })
+  })
+  namesInputs.forEach(el => {
+    el.addEventListener('input', validateNames)
+  })
+  phonesInputs.forEach(el => {
+    el.addEventListener('input', validateCell)
+  })
+}
+
+const sendForm = () => {
+  const errorMessage = `it's broke`
+  const successMessage = `Thanks, will get in touch soon!`
+  const spinner = `
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="25px" height="25px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+  <g>
+    <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#fff" stroke-width="15"></path>
+    <path d="M49 3L49 27L61 15L49 3" fill="#ffffff"></path>
+    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.2987012987012987s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+  </g>
+  </svg>`
+
+  const forms = document.querySelectorAll('form')
+  const statusMessage = document.createElement('div')
+  const inputs = document.body.querySelectorAll('input')
+
+  statusMessage.style.cssText = `
+    text-align: center;
+		font-size: 2rem;
+		color: tomato;
+	`
+
+  const postData = body => {
+    statusMessage.innerHTML = spinner
+    return fetch("./server.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+  }
+
+  function delay(ms) {
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, ms)
+    })
+  }
 
 
+  const formSend = currentForm => {
+
+    currentForm.addEventListener('input', e => {
+      const target = e.target
+      e.preventDefault()
+
+      currentForm.appendChild(statusMessage)
+
+      const checkPhone = /[0-9]/
+      const checkName = /[a-zа-яё]/gi
+
+      const inputsPhone = currentForm.querySelector('input[name="phone"]')
+      const inputsName = currentForm.querySelector('input[name="fio"]')
+      const formBtn = document.querySelectorAll('button[type="submit"]')
+
+      const btnEnable = () => {
+        formBtn.forEach(el => {
+          el.removeAttribute('disabled')
+        })
+      }
+      const btnDisable = () => {
+        formBtn.forEach(el => {
+          el.setAttribute('disabled', true)
+        })
+      }
+
+      if (target.contains(inputsName) && !checkName.test(inputsName.value)) {
+        btnDisable()
+        // inputsName.style.backgroundColor = bgWarnColor
+        statusMessage.textContent = `only cyr/lat allowed`
+        delay(5000).then(() => {
+          statusMessage.innerHTML = ''
+        })
+        return
+      } else {
+        btnEnable()
+        statusMessage.textContent = ''
+        // inputsName.style.backgroundColor = 'white'
+      }
+
+      if (target.contains(inputsPhone) && !inputsPhone.value.match(checkPhone) || inputsPhone.value.length > 16) {
+        btnDisable()
+        statusMessage.textContent = `only numbers allowed`
+        delay(5000).then(() => {
+          statusMessage.innerHTML = ''
+        })
+        return
+      } else {
+        btnEnable()
+        statusMessage.textContent = ''
+      }
+
+
+    })
+
+    currentForm.addEventListener('submit', e => {
+      e.preventDefault()
+
+      currentForm.appendChild(statusMessage)
+      const formData = new FormData(currentForm)
+      let body = {}
+
+      formData.forEach((val, key) => {
+        body[key] = val
+      })
+
+      postData(body)
+        .then(res => {
+          if (res.status !== 200) {
+            throw new Error(`response status isn't 200!`)
+          }
+          return res
+        })
+        .then(
+          statusMessage.innerHTML = spinner
+        )
+        .then(() => {
+          statusMessage.textContent = successMessage
+
+          body = {}
+          inputs.forEach(el => {
+            el.value = ''
+          })
+        })
+        .catch(err => {
+          statusMessage.textContent = errorMessage
+          console.error(err)
+        })
+
+      delay(5000).then(() => {
+        statusMessage.innerHTML = ''
+      })
+    })
+
+  }
+  forms.forEach(el => formSend(el))
+}
+
+sendForm()
+useValidateForms()
+useValidateCalc()
+calc()
 scrollToTop()
 countTimer()
 openLightbox()
