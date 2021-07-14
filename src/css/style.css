@@ -502,6 +502,9 @@ input.error {
 }
 .benefits-inner {
   text-align: center;
+  width: 100% !important;
+  max-width: 560px !important;
+  margin: 0 auto !important;
 }
 .benefit-image {
   margin-bottom: 22px;
@@ -535,6 +538,11 @@ input.error {
 }
 #calc {
   background-color: #466a78;
+}
+.servicesSlide--container{
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1060px;
 }
 .service-block {
   position: relative;
@@ -1595,9 +1603,25 @@ input.error {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+  transition: all 1s ease;
 }
 
 .benefits__item {
+  /* visibility: hidden; */
+  width: 100%;
+  max-width: 185px;
+}
+
+.benefits__item.right {
+  right: 2px;
+}
+
+.benefits__item.left {
+  left: 2px;
+}
+
+.benefits__item--active {
+  visibility: visible;
   width: 100%;
   max-width: 185px;
 }

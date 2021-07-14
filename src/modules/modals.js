@@ -1,5 +1,180 @@
 /* eslint-disable quotes */
 'use strict'
+//*SLIDERS
+class SliderCarousel {
+  constructor({
+    main,
+    wrap,
+    next,
+    prev,
+    infinity = false,
+    position = 0,
+    slidesToShow = 3,
+    responsive = [],
+  }) {
+    if (!main || !wrap) {
+      console.warn('slider-carousel: need to add 2 selectors: main and wrap')
+    }
+    this.main = document.querySelector(main)
+    this.wrap = document.querySelector(wrap)
+    this.slides = document.querySelector(wrap).children
+    this.next = document.querySelector(next)
+    this.prev = document.querySelector(prev)
+    this.slidesToShow = slidesToShow
+    this.options = {
+      infinity,
+      position,
+      widthSlide: Math.floor(100 / this.slidesToShow),
+      maxPosition: this.slides.length - this.slidesToShow,
+    }
+    this.responsive = responsive
+  }
+
+  init() {
+    this.addGloClass()
+    this.addStyles()
+
+    if (this.prev && this.next) {
+      this.constrolSlider()
+    } else {
+      this.addArrows()
+      this.constrolSlider()
+    }
+
+    if (this.responsive) {
+      this.responsiveInit()
+    }
+  }
+
+  addGloClass() {
+    this.main.classList.add('glo-slider')
+    this.wrap.classList.add('glo-slider__wrap')
+    for (const el of this.slides) {
+      el.classList.add('glo-slider__item')
+    }
+  }
+
+  addStyles() {
+    let style = document.getElementById('sliderCarousel-style')
+    if (!style) {
+      style = document.createElement('style')
+      style.id = 'sliderCarousel-style'
+    }
+
+    style.textContent = `
+      .glo-slider{
+        overflow: hidden !important;
+        
+      }
+      .glo-slider__wrap{
+        
+        display: flex !important;
+        transition: transform 0.5s !important;
+        will-change: transform !important;
+      }
+      .glo-slider__item{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 0 0 ${this.options.widthSlide}% !important;
+        margin: auto 0 !important;
+      }
+    `
+    //overflow: hidden !important;
+    document.head.appendChild(style)
+  }
+
+  constrolSlider() {
+    this.prev.addEventListener('click', this.prevSlider.bind(this))
+    this.next.addEventListener('click', this.nextSlider.bind(this))
+  }
+
+  prevSlider() {
+    if (this.options.infinity || this.options.position > 0) {
+      --this.options.position
+      console.log(this.options.position)
+      if (this.options.position < 0) {
+        this.options.position = this.options.maxPosition
+      }
+      this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlide}%)`
+    }
+  }
+
+  nextSlider() {
+    if (this.options.infinity || this.options.position < this.options.maxPosition) {
+      ++this.options.position
+      console.log(this.options.position)
+      if (this.options.position > this.options.maxPosition) {
+        this.options.position = 0
+      }
+      this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlide}%)`
+    }
+  }
+
+  addArrows() {
+    this.prev = document.createElement('button')
+    this.next = document.createElement('button')
+    this.prev.className = 'glo-slider__prev'
+    this.next.className = 'glo-slider__next'
+    this.main.appendChild(this.prev)
+    this.main.appendChild(this.next)
+
+    const style = document.createElement('style')
+    style.textContent = `
+      .glo-slider__prev{
+        margin: 0 10px;
+        border: 20px solid transparent;
+        background: transparent;
+        border-right-color: #19b5fe
+      }
+      .glo-slider__next{
+        margin: 0 10px;
+        border: 20px solid transparent;
+        background: transparent;
+        border-left-color: #19b5fe
+      }
+      .glo-slider__prev:hover,
+      .glo-slider__next:hover,
+      .glo-slider__prev:focus,
+      .glo-slider__next:focus{
+        background: transparent;
+        outline: transparent;
+      }
+    
+    `
+    document.head.appendChild(style)
+  }
+
+  responsiveInit() {
+    const slidesToShowDefault = this.slidesToShow
+    const allResponsiveBreakpoints = this.responsive.map(item => item.breakpoint)
+    const maxResponsiveBreakpoint = Math.max(...allResponsiveBreakpoints)
+
+    const checkResponsive = () => {
+      console.log('object')
+      const widthWindow = document.documentElement.clientWidth
+      if (widthWindow < maxResponsiveBreakpoint) {
+        for (let i = 0; i < allResponsiveBreakpoints.length; i++) {
+          if (widthWindow < allResponsiveBreakpoints[i]) {
+            this.slidesToShow = this.responsive[i].slidesToShow
+            this.options.widthSlide = Math.floor(100 / this.slidesToShow)
+            this.addStyles()
+          }
+        }
+      } else {
+        this.slidesToShow = slidesToShowDefault
+        this.options.widthSlide = Math.floor(100 / this.slidesToShow)
+        this.addStyles()
+      }
+    }
+
+    checkResponsive()
+
+    window.addEventListener('resize', checkResponsive)
+  }
+}
+
 //* OPEN MODALS
 const modals = () => {
   const popup = document.querySelector('.header-modal')
@@ -213,7 +388,7 @@ const scrollToTop = () => {
   toTopBtn.addEventListener('click', scroll)
 }
 
-//*VALIDATION
+//*VALIDATION CALC
 const useValidateCalc = () => {
   if (document.getElementById('calc-input')) {
 
@@ -228,6 +403,7 @@ const useValidateCalc = () => {
   }
 }
 
+//*VALIDATION FORMS
 const useValidateForms = () => {
   const namesInputs = document.querySelectorAll('input[name="fio"]')
   const phonesInputs = document.querySelectorAll('input[name="phone"]')
@@ -286,15 +462,16 @@ const useValidateForms = () => {
   })
 }
 
+//*FORM SUBMIT
 const sendForm = () => {
   const errorMessage = `it's broke`
   const successMessage = `Thanks, will get in touch soon!`
   const spinner = `
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="25px" height="25px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto background: none display: block shape-rendering: auto" width="25px" height="25px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
   <g>
     <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#fff" stroke-width="15"></path>
     <path d="M49 3L49 27L61 15L49 3" fill="#ffffff"></path>
-    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.2987012987012987s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.2987012987012987s" values="0 50 50360 50 50" keyTimes="01"></animateTransform>
   </g>
   </svg>`
 
@@ -355,8 +532,7 @@ const sendForm = () => {
 
       if (target.contains(inputsName) && !checkName.test(inputsName.value)) {
         btnDisable()
-        // inputsName.style.backgroundColor = bgWarnColor
-        statusMessage.textContent = `only cyr/lat allowed`
+        statusMessage.textContent = `только буквы`
         delay(5000).then(() => {
           statusMessage.innerHTML = ''
         })
@@ -364,7 +540,6 @@ const sendForm = () => {
       } else {
         btnEnable()
         statusMessage.textContent = ''
-        // inputsName.style.backgroundColor = 'white'
       }
 
       if (target.contains(inputsPhone) && !inputsPhone.value.match(checkPhone) || inputsPhone.value.length > 16) {
@@ -425,6 +600,85 @@ const sendForm = () => {
   forms.forEach(el => formSend(el))
 }
 
+//* МАСКА ТЕЛЕФОНА
+
+function maskPhone(selector, masked = '+7 (___) ___-__-__') {
+  const elems = document.querySelectorAll(selector)
+
+  function mask(event) {
+    const keyCode = event.keyCode
+    const template = masked,
+      def = template.replace(/\D/g, ""),
+      val = this.value.replace(/\D/g, "")
+    let i = 0,
+      newValue = template.replace(/[_\d]/g, function (a) {
+        return i < val.length ? val.charAt(i++) || def.charAt(i) : a
+      })
+    i = newValue.indexOf("_")
+    if (i != -1) {
+      newValue = newValue.slice(0, i)
+    }
+    let reg = template.substr(0, this.value.length).replace(/_+/g,
+      function (a) {
+        return "\\d{1," + a.length + "}"
+      }).replace(/[+()]/g, "\\$&")
+    reg = new RegExp("^" + reg + "$")
+    if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) {
+      this.value = newValue
+    }
+    if (event.type == "blur" && this.value.length < 5) {
+      this.value = ""
+    }
+  }
+
+  for (const elem of elems) {
+    elem.addEventListener("input", mask)
+    elem.addEventListener("focus", mask)
+    elem.addEventListener("blur", mask)
+  }
+
+}
+
+// use
+
+maskPhone('input[name="phone"]')
+
+const options = {
+  main: '.benefits-inner',
+  wrap: '.benefits-wrap',
+  next: '.benefits__arrow--right',
+  prev: '.benefits__arrow--left',
+  // maxWidth: 560,
+  slidesToShow: 3,
+  infinity: true,
+  responsive: [
+    {
+      breakpoint: 576,
+      slidesToShow: 1
+    },
+  ]
+}
+const carousel = new SliderCarousel(options)
+carousel.init()
+
+const servicesOptions = {
+  main: '.servicesSlide--container',
+  wrap: '.servicesSlide--wrap',
+  next: '.services__arrow--right',
+  prev: '.services__arrow--left',
+  slidesToShow: 2,
+  infinity: true,
+  responsive: [
+    {
+      breakpoint: 576,
+      slidesToShow: 1
+    },
+  ]
+}
+const carouselServices = new SliderCarousel(servicesOptions)
+carouselServices.init()
+
+// slider()
 sendForm()
 useValidateForms()
 useValidateCalc()
