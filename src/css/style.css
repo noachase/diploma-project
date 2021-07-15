@@ -506,9 +506,17 @@ input.error {
   max-width: 560px !important;
   margin: 0 auto !important;
 }
+
+@media(max-width: 576px) {
+  .benefits-inner {
+    max-width: 168px !important;
+  }
+}
+
 .benefit-image {
   margin-bottom: 22px;
 }
+
 .benefit-title {
   margin: 0;
   font-size: 18px;
@@ -801,7 +809,8 @@ p.services-image_mobile {
   opacity: 0;
 }
 .document-inner:hover .document-overlay {
-  opacity: 1;
+  opacity: 1 !important;
+  background-color: red;
   transition: opacity 0.3s linear;
   -webkit-transition: opacity 0.3s linear;
 }
@@ -1103,6 +1112,7 @@ p.services-image_mobile {
 .box-modal h4 {
   margin-top: 30px;
 }
+
 @media (max-width: 1850px) {
   #offer .container {
     height: 650px;

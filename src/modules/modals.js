@@ -93,7 +93,6 @@ class SliderCarousel {
   prevSlider() {
     if (this.options.infinity || this.options.position > 0) {
       --this.options.position
-      console.log(this.options.position)
       if (this.options.position < 0) {
         this.options.position = this.options.maxPosition
       }
@@ -104,7 +103,6 @@ class SliderCarousel {
   nextSlider() {
     if (this.options.infinity || this.options.position < this.options.maxPosition) {
       ++this.options.position
-      console.log(this.options.position)
       if (this.options.position > this.options.maxPosition) {
         this.options.position = 0
       }
@@ -152,7 +150,6 @@ class SliderCarousel {
     const maxResponsiveBreakpoint = Math.max(...allResponsiveBreakpoints)
 
     const checkResponsive = () => {
-      console.log('object')
       const widthWindow = document.documentElement.clientWidth
       if (widthWindow < maxResponsiveBreakpoint) {
         for (let i = 0; i < allResponsiveBreakpoints.length; i++) {
@@ -195,7 +192,6 @@ const modals = () => {
     let target = e.target
 
     if (target.classList.contains('servicesBtn')) {
-      console.log('modal', target.classList)
       servicesModal.style.display = 'block'
     }
 
@@ -218,6 +214,11 @@ const openLightbox = () => {
 
   const imagesContainer = document.getElementById('documents')
   const lightbox = document.getElementById('lightbox')
+  const aHr = document.querySelector('a.sertificate-document').getAttribute('href')
+  const elImg = document.createElement('img')
+  elImg.setAttribute('src', aHr)
+  elImg.style.height = '100%'
+  lightbox.appendChild(elImg)
 
   const toggleCert = e => {
     e.preventDefault()
@@ -225,42 +226,21 @@ const openLightbox = () => {
     const t = e.target
 
     const imageWrapper = t.closest('.image-wrapper')
-    // const ahr = imageWrapper.querySelector('img').getAttribute('src')
-    // console.log("🚀 ~ file: modals.js ~ line 87 ~ openLightbox ~ ahr", ahr)
 
     if (imageWrapper) {
       const image = imageWrapper.querySelector('img')
-      const images = imageWrapper.querySelectorAll('img')
-
-      const aHref = imageWrapper.querySelector('a').getAttribute('href')
-      let srcArr = []
-      images.forEach(el => {
-        srcArr.push(el.getAttribute('src'))
-      })
-      console.log('srcArr', srcArr)
-      image.setAttribute('src', aHref)
-      // console.log("aHref", aHref)
       if (image) {
-        lightbox.innerHTML = '<div class="close-lightbox"></div>' + image.outerHTML
+        lightbox.innerHTML = `<div class="close-lightbox"></div>` + elImg.outerHTML
         lightbox.classList.add('show')
       }
-      const imageSrc = imageWrapper.querySelector('img').getAttribute('src')
     }
 
+    //! LIGHTBOX CLOSE
     if (t.classList.contains('close-lightbox')) {
-      const lightbox = document.getElementById('lightbox')
-      console.log('lightbox', lightbox.parentElement.parentElement)
-      // const 
-      const imageSr = lightbox.querySelector('img').getAttribute('src')
-
       lightbox.classList.remove('show')
     }
   }
 
-  // Loading...
-  // setTimeout(() =>
-  //   imagesContainer.classList.remove('loading')
-  //   , 1500)
   imagesContainer.addEventListener('click', toggleCert)
 }
 
@@ -272,6 +252,7 @@ const calc = (price = 100) => {
     const calcTypeMaterial = document.getElementById('calc-type-material')
     const calcSquare = document.getElementById('calc-input')
     const totalValue = document.getElementById('calc-totalid')
+    let calcRes
 
     const countSum = () => {
       let total = 0
@@ -283,6 +264,7 @@ const calc = (price = 100) => {
         total = price * typeValue * typeMaterialValue * squareValue
       }
       totalValue.value = total
+      window.calcRes = total
     }
 
     calcBlock.addEventListener('change', e => {
@@ -567,6 +549,9 @@ const sendForm = () => {
       formData.forEach((val, key) => {
         body[key] = val
       })
+      if (window.calcRes > 0) body.calcTotal = window.calcRes
+
+
 
       postData(body)
         .then(res => {
@@ -600,8 +585,7 @@ const sendForm = () => {
   forms.forEach(el => formSend(el))
 }
 
-//* МАСКА ТЕЛЕФОНА
-
+//* CELL INPUT MASK
 function maskPhone(selector, masked = '+7 (___) ___-__-__') {
   const elems = document.querySelectorAll(selector)
 
