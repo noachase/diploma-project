@@ -448,14 +448,6 @@ const useValidateForms = () => {
 const sendForm = () => {
   const errorMessage = `it's broke`
   const successMessage = `Thanks, will get in touch soon!`
-  const spinner = `
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto background: none display: block shape-rendering: auto" width="25px" height="25px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-  <g>
-    <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#fff" stroke-width="15"></path>
-    <path d="M49 3L49 27L61 15L49 3" fill="#ffffff"></path>
-    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.2987012987012987s" values="0 50 50360 50 50" keyTimes="01"></animateTransform>
-  </g>
-  </svg>`
 
   const forms = document.querySelectorAll('form')
   const statusMessage = document.createElement('div')
@@ -468,7 +460,6 @@ const sendForm = () => {
 	`
 
   const postData = body => {
-    statusMessage.innerHTML = spinner
     return fetch("./server.php", {
       method: "POST",
       headers: {
@@ -560,9 +551,9 @@ const sendForm = () => {
           }
           return res
         })
-        .then(
-          statusMessage.innerHTML = spinner
-        )
+        // .then(
+        //   statusMessage.innerHTML = spinner
+        // )
         .then(() => {
           statusMessage.textContent = successMessage
 
