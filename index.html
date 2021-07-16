@@ -21,9 +21,10 @@
 	<meta name="description"
 		content="Окна в дом, квартиру или коттедж из пластикового (пвх) или алюминиевого профиля. Стандартные, цветные и с индивидуальным дизайном! Отличные цены и акции!">
 	<script defer src="./dist/main.js"></script>
+
 </head>
 
-<body class="okna">
+<body id="top" class="okna">
 	<nav class="navbar navbar-default navbar-fixed-top navigation-top" id="navigation-fixed">
 		<div class="container">
 			<div class="navbar-header">
@@ -191,13 +192,13 @@
 	</div>
 	</div>
 	<div id="services" class="section">
-		<div class="container">
+		<div class="container servicesSlide--container">
 			<div class="section-title">
 				<div class="heading-image"><i class="service-ico"></i></div>
 				<h2 class="heading white">Наши <span>услуги</span></h2>
 			</div>
-			<div class="row">
-				<div class="col-md-12 col-lg-6">
+			<div class="row servicesSlide--wrap">
+				<div class="col-md-12 col-lg-6 servicesSlide">
 					<div class="service-block">
 						<div class="service-image">
 							<img src="./src/images/services/5.jpg" alt="">
@@ -209,11 +210,11 @@
 							<p class="services-image_mobile visible-xs-block"><a href="./src/images/services/original/standart/1.jpg"
 									data-fancybox-group="fancybox-thumb-1" class="fancybox-thumb"><span>Смотреть работы</span></a></p>
 							<div class="service-button"><a href="#application" data-subject="Стандартные ПВХ-окна"
-									class="btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
+									class="servicesBtn btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12 col-lg-6">
+				<div class="col-md-12 col-lg-6 servicesSlide">
 					<div class="service-block">
 						<div class="service-image">
 							<img src="./src/images/services/6.jpg" alt="">
@@ -225,11 +226,11 @@
 							<p class="services-image_mobile visible-xs-block"><a href="./src/images/services/original/premium/1.jpg"
 									data-fancybox-group="fancybox-thumb-2" class="fancybox-thumb"><span>Смотреть работы</span></a></p>
 							<div class="service-button"><a href="#application" data-subject="Пвх-окна премиум класса"
-									class="btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
+									class="servicesBtn btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12 col-lg-6">
+				<div class="col-md-12 col-lg-6 servicesSlide">
 					<div class="service-block">
 						<div class="service-image">
 							<img src="./src/images/services/7.jpg" alt="">
@@ -241,11 +242,11 @@
 							<p class="services-image_mobile visible-xs-block"><a href="./src/images/services/original/septa/1.jpg"
 									data-fancybox-group="fancybox-thumb-3" class="fancybox-thumb"><span>Смотреть работы</span></a></p>
 							<div class="service-button"><a href="#application" data-subject="Входные группы-перегородки"
-									class="btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
+									class="servicesBtn btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12 col-lg-6">
+				<div class="col-md-12 col-lg-6 servicesSlide">
 					<div class="service-block">
 						<div class="service-image">
 							<img src="./src/images/services/8.jpg" alt="">
@@ -257,17 +258,17 @@
 							<p class="services-image_mobile visible-xs-block"><a href="./src/images/services/original/custom/1.jpg"
 									data-fancybox-group="fancybox-thumb-4" class="fancybox-thumb"><span>Смотреть работы</span></a></p>
 							<div class="service-button"><a href="#application" data-subject="Окна с уникальным дизайном"
-									class="btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
+									class="servicesBtn btn btn-success btn-sm fancyboxModal">Вызвать замерщика</a></div>
 						</div>
 					</div>
 				</div>
-				<div class="services-arrows">
-					<div class="services__arrow services__arrow--left">
-						<img src="./src/images/benefits/left-arrow.svg" alt="">
-					</div>
-					<div class="services__arrow services__arrow--right">
-						<img src="./src/images/benefits/right-arrow.svg" alt="">
-					</div>
+			</div>
+			<div class="services-arrows">
+				<div class="services__arrow services__arrow--left">
+					<img src="./src/images/benefits/left-arrow.svg" alt="">
+				</div>
+				<div class="services__arrow services__arrow--right">
+					<img src="./src/images/benefits/right-arrow.svg" alt="">
 				</div>
 			</div>
 		</div>
@@ -283,10 +284,10 @@
 						<div class="countdown" data-days="7">
 							<div class="countdown-text">До конца акции осталось:
 								<div class="count-wrap">
-									<div class="count count_1">Дней:</br> <span>01</span></div>
-									<div class="count count_2">Часов:</br> <span>02</span></div>
-									<div class="count count_3">Минут:</br> <span>03</span></div>
-									<div class="count count_4">Секунд:</br> <span>04</span></div>
+									<div class="count count_1">Дней:</br> <span class="timerDays">01</span></div>
+									<div class="count count_2">Часов:</br> <span class="timerHours">02</span></div>
+									<div class="count count_3">Минут:</br> <span class="timerMinutes">03</span></div>
+									<div class="count count_4">Секунд:</br> <span class="timerSeconds">04</span></div>
 								</div>
 							</div>
 						</div>
@@ -298,12 +299,12 @@
 							<form name="action-form" class="form-horizontal">
 								<div class="form-group">
 									<div class="col-sm-12">
-										<input type="text" name="fio" class="form-control required" placeholder="ваше имя">
+										<input type="text" name="fio" class="form-control required" required placeholder="ваше имя">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
-										<input type="text" name="phone" class="form-control required" placeholder="ваш телефон"
+										<input type="text" name="phone" class="form-control required" required placeholder="ваш телефон"
 											data-mask="+7 (999) 999-99-99">
 									</div>
 								</div>
@@ -456,27 +457,28 @@
 				<h2 class="heading"><span>Сертификаты</span> и <span>документы</span></h2>
 			</div>
 			<div class="text-center">
-				<div class="col-sm-4">
+				<div class="col-sm-4 image-wrapper">
 					<a href="./src/images/documents/original/document4.jpg" class="sertificate-document"
 						data-fancybox-group="gallery-documents">
 						<img src="./src/images/documents/document4.jpg" class="img-responsive" alt="">
 						<div class="document-overlay"></div>
 					</a>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-4 image-wrapper">
 					<a href="./src/images/documents/original/document4.jpg" class="sertificate-document"
 						data-fancybox-group="gallery-documents">
 						<img src="./src/images/documents/document4.jpg" class="img-responsive" alt="">
 						<div class="document-overlay"></div>
 					</a>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-4 image-wrapper">
 					<a href="./src/images/documents/original/document4.jpg" class="sertificate-document"
 						data-fancybox-group="gallery-documents">
 						<img src="./src/images/documents/document4.jpg" class="img-responsive" alt="">
 						<div class="document-overlay"></div>
 					</a>
 				</div>
+				<div id="lightbox" class="lightbox"></div>
 			</div>
 		</div>
 	</div>
@@ -491,10 +493,10 @@
 						<div class="countdown" data-days="7">
 							<div class="countdown-text">До конца акции осталось:
 								<div class="count-wrap">
-									<div class="count count_1">Дней:</br> <span>01</span></div>
-									<div class="count count_2">Часов:</br> <span>02</span></div>
-									<div class="count count_3">Минут:</br> <span>03</span></div>
-									<div class="count count_4">Секунд:</br> <span>04</span></div>
+									<div class="count count_1">Дней:</br> <span class="timerDays">01</span></div>
+									<div class="count count_2">Часов:</br> <span class="timerHours">02</span></div>
+									<div class="count count_3">Минут:</br> <span class="timerMinutes">03</span></div>
+									<div class="count count_4">Секунд:</br> <span class="timerSeconds">04</span></div>
 								</div>
 							</div>
 						</div>
@@ -506,12 +508,12 @@
 							<form name="action-form2" class="form-horizontal">
 								<div class="form-group">
 									<div class="col-sm-12">
-										<input type="text" name="fio" class="form-control required" placeholder="ваше имя">
+										<input type="text" name="fio" class="form-control required" required placeholder="ваше имя">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
-										<input type="text" name="phone" class="form-control required" placeholder="ваш телефон"
+										<input type="text" name="phone" class="form-control required" required placeholder="ваш телефон"
 											data-mask="+7 (999) 999-99-99">
 									</div>
 								</div>
@@ -635,10 +637,10 @@
 			</p>
 			<form name="callback-form">
 				<div class="form-group">
-					<input type="text" name="fio" class="form-control required" placeholder="Ваше имя*">
+					<input type="text" name="fio" class="form-control required" required placeholder="Ваше имя*">
 				</div>
 				<div class="form-group">
-					<input type="text" name="phone" class="form-control required" placeholder="Контактный телефон*"
+					<input type="text" name="phone" class="form-control required" required placeholder="Контактный телефон*"
 						data-mask="+7 (999) 999-99-99">
 				</div>
 				<div class="form-action">
@@ -661,10 +663,10 @@
 				скидку!</p>
 			<form name="order-form">
 				<div class="form-group">
-					<input type="text" name="fio" class="form-control required" placeholder="Ваше имя*">
+					<input type="text" name="fio" class="form-control required" required placeholder="Ваше имя*">
 				</div>
 				<div class="form-group">
-					<input type="text" name="phone" class="form-control required" placeholder="Контактный телефон*"
+					<input type="text" name="phone" class="form-control required" required placeholder="Контактный телефон*"
 						data-mask="+7 (999) 999-99-99">
 				</div>
 				<div class="form-action">
@@ -686,10 +688,10 @@
 			<p class="text-center">Оставьте заявку и специалист свяжется с Вами в ближайшее время!</p>
 			<form name="application-form">
 				<div class="form-group">
-					<input type="text" name="fio" class="form-control required" placeholder="Ваше имя*">
+					<input type="text" name="fio" class="form-control required" required placeholder="Ваше имя*">
 				</div>
 				<div class="form-group">
-					<input type="text" name="phone" class="form-control required" placeholder="Контактный телефон*"
+					<input type="text" name="phone" class="form-control required" required placeholder="Контактный телефон*"
 						data-mask="+7 (999) 999-99-99">
 				</div>
 				<div class="form-action">
@@ -730,11 +732,11 @@
 								вопросы!</p>
 							<form name="callback-form">
 								<div class="form-group">
-									<input type="text" name="fio" class="form-control required" placeholder="Ваше имя*">
+									<input type="text" name="fio" class="form-control required" required placeholder="Ваше имя*">
 								</div>
 								<div class="form-group">
-									<input type="text" name="phone" class="form-control required" placeholder="Контактный телефон*"
-										data-mask="+7 (999) 999-99-99">
+									<input type="text" name="phone" class="form-control required" required
+										placeholder="Контактный телефон*" data-mask="+7 (999) 999-99-99">
 								</div>
 								<div class="form-action">
 									<div class="text-center"><button type="submit" class="btn btn-warning feedback">Свяжитесь со
@@ -763,11 +765,11 @@
 							<p class="text-center">Оставьте заявку и специалист свяжется с Вами в ближайшее время!</p>
 							<form name="application-form">
 								<div class="form-group">
-									<input type="text" name="fio" class="form-control required" placeholder="Ваше имя*">
+									<input type="text" name="fio" class="form-control required" required placeholder="Ваше имя*">
 								</div>
 								<div class="form-group">
-									<input type="text" name="phone" class="form-control required" placeholder="Контактный телефон*"
-										data-mask="+7 (999) 999-99-99">
+									<input type="text" name="phone" class="form-control required" required
+										placeholder="Контактный телефон*" data-mask="+7 (999) 999-99-99">
 								</div>
 								<div class="form-action">
 									<div class="text-center"><button type="submit" class="btn btn-success feedback">Вызвать
@@ -789,6 +791,9 @@
 	<div class="smooth-scroll">
 		<img class="smooth-scroll__img" src="././src/images/prev_arrow.png" alt="smooth">
 	</div>
+
+
+
 </body>
 
 </html>
