@@ -68,9 +68,9 @@ const sendForm = () => {
         statusMessage.textContent = ''
       }
 
-      if (target.contains(inputsPhone) && !inputsPhone.value.match(checkPhone) || inputsPhone.value.length > 16) {
+      if (target.contains(inputsPhone) && !inputsPhone.value.match(checkPhone) || target.contains(inputsPhone) && inputsPhone.value.length < 12) {
         btnDisable()
-        statusMessage.textContent = `only numbers allowed`
+        statusMessage.textContent = `введите номер полностью`
         delay(5000).then(() => {
           statusMessage.innerHTML = ''
         })

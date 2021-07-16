@@ -15,7 +15,7 @@ module.exports = {
 		open: true,
 		port: 8085,
 		hot: true,
-		writeToDisk: true,
+		writeToDisk: false,
 	},
 	mode: 'development',
 	module: {

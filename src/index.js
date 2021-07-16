@@ -7,15 +7,17 @@ import scrollToTop from './modules/scrollUp'
 import countTimer from './modules/timer'
 import openLightbox from './modules/openLightbox'
 import SliderCarousel from './modules/sliders'
+import openModals from './modules/openModals'
 
 
 calc()
+maskPhone('input[name="phone"]', '+7 (___) ___-__-__')
 openLightbox()
 useValidateCalc()
+openModals()
 countTimer()
 scrollToTop()
 useValidateForms()
-maskPhone('input[name="phone"]', '+7 (___) ___-__-__')
 sendForm()
 
 const options = {
