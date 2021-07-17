@@ -128,23 +128,18 @@ const sendForm = () => {
         })
         .then(() => {
           statusMessage.textContent = successMessage
-
-          inputs.forEach(el => {
-            el.value = ''
-          })
-        })
-        .then(setTimeout(() => {
+          currentFormBtn.innerHTML = btnText
           setTimeout(() => {
-            currentFormBtn.innerHTML = btnText
-            setTimeout(closeModal, 2000, currentForm)
-          }, 0)
-        }, 4000))
+            statusMessage.innerHTML = ''
+            setTimeout(closeModal, 1000, currentForm)
+          }, 4000)
+        })
+        .then(inputs.forEach(el => el.value = ''))
         .catch(err => {
           statusMessage.textContent = errorMessage
           console.error(err)
         })
     })
-
   }
   forms.forEach(el => formSend(el))
 }
