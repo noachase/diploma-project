@@ -77,10 +77,8 @@ const sendForm = () => {
           statusMessage.innerHTML = ''
         })
         return
-      } else {
-        btnEnable()
-        statusMessage.textContent = ''
       }
+
     })
 
     const closeModal = currentForm => {
@@ -97,22 +95,21 @@ const sendForm = () => {
 
     currentForm.addEventListener('submit', e => {
       e.preventDefault()
-      // const currentFormBtn = currentForm.querySelector('button[type="submit"]')
-      // const btnText = currentFormBtn.textContent
+      const currentFormBtn = currentForm.querySelector('button[type="submit"]')
+      const btnText = currentFormBtn.textContent
       const formData = new FormData(currentForm)
       let body = {}
 
-      // const spinner = `
-      // <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="25px" height="25px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-      // <g>
-      //   <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#ffffff" stroke-width="15"></path>
-      //   <path d="M49 3L49 27L61 15L49 3" fill="#ffffff"></path>
-      //   <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.2987012987012987s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
-      // </g>
-      // </svg>`
+      const spinner = `
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="25px" height="25px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+      <g>
+        <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#ffffff" stroke-width="15"></path>
+        <path d="M49 3L49 27L61 15L49 3" fill="#ffffff"></path>
+        <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.2987012987012987s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+      </g>
+      </svg>`
 
-      // currentFormBtn.innerHTML = spinner
-
+      currentFormBtn.innerHTML = spinner
 
       currentForm.appendChild(statusMessage)
 
@@ -136,17 +133,16 @@ const sendForm = () => {
             el.value = ''
           })
         })
-        // .then(setTimeout(currentFormBtn.innerHTML = btnText, 3000))
-        .then(setTimeout(closeModal, 5000, currentForm)) // close modal form after submit
+        .then(setTimeout(() => {
+          setTimeout(() => {
+            currentFormBtn.innerHTML = btnText
+            setTimeout(closeModal, 2000, currentForm)
+          }, 0)
+        }, 4000))
         .catch(err => {
           statusMessage.textContent = errorMessage
           console.error(err)
         })
-
-
-      delay(5000).then(() => {
-        statusMessage.innerHTML = ''
-      })
     })
 
   }
